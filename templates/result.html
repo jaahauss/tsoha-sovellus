@@ -1,0 +1,9 @@
+{{ topic }}
+<hr>
+<ul>
+{% for message in messages %}
+<li> {{ message.content }}
+{% endfor %}
+</ul>
+<hr>
+<a href="/">Takaisin</a>
