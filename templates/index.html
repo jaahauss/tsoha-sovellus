@@ -9,8 +9,7 @@ Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
 <a href="/delete/{{ book.id }}">Poista kirja</a> <br>
 <hr>
 {% endfor %}
-<a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a>
-<hr>
+<a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a> <br>
 Ehdotetut kirjat:
 {% for suggestion in suggestions %}
 <ul>
