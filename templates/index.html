@@ -2,10 +2,11 @@
 <a href="/new">Uusi kirja</a>
 <hr>
 {% for book in books %}
-Aihe: {{ book.topic }} <br>
-Luotu: {{ book.created_at.strftime("%Y-%m-%d %H:%M:%S") }} <br>
+Kirja: {{ book.topic }} <br>
+Luotu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
 <a href="/book/{{ book.id }}">Lisää kommenttti</a> |
-<a href="/result/{{ book.id }}">Lue kommentit</a> <br>
+<a href="/result/{{ book.id }}">Lue kommentit</a> |
+<a href="/delete/{{ book.id }}">Poista kirja</a> <br>
 <hr>
 {% endfor %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>

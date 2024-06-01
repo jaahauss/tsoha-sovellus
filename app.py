@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    sql = "SELECT id, topic, created_at FROM books ORDER BY id DESC"
+    sql = "SELECT id, topic, created_at FROM books WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(text(sql))
     books = result.fetchall()
     return render_template("index.html", books=books)
@@ -26,6 +26,8 @@ def create():
     sql = text("INSERT INTO books (topic, created_at) VALUES (:topic, NOW()) RETURNING id")
     result = db.session.execute(sql, {"topic":topic})
     book_id = result.fetchone()[0]
+    sql = text("UPDATE books SET visible=TRUE WHERE id=:book_id")
+    db.session.execute(sql, {"book_id":book_id})
     db.session.commit()
     return redirect("/")
 
@@ -54,6 +56,13 @@ def result(id):
     result = db.session.execute(sql, {"book_id":id})
     messages = result.fetchall()
     return render_template("result.html", topic=topic, messages=messages)
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    sql = text("UPDATE books SET visible=FALSE WHERE id=:id")
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+    return redirect("/")
 
 @app.route("/login",methods=["POST"])
 def login():
