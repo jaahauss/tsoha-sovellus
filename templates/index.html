@@ -3,8 +3,8 @@
 <hr>
 {% for book in books %}
 Kirja: {{ book.topic }} <br>
-Luotu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
-<a href="/book/{{ book.id }}">Lisää kommenttti</a> |
+Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
+<a href="/write/{{ book.id }}">Lisää kommenttti</a> |
 <a href="/result/{{ book.id }}">Lue kommentit</a> |
 <a href="/delete/{{ book.id }}">Poista kirja</a> <br>
 <hr>

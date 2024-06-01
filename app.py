@@ -31,8 +31,8 @@ def create():
     db.session.commit()
     return redirect("/")
 
-@app.route("/book/<int:id>")
-def book(id):
+@app.route("/write/<int:id>")
+def write(id):
     sql = text("SELECT topic FROM books WHERE id=:id")
     result = db.session.execute(sql, {"id":id})
     topic = result.fetchone()[0]
