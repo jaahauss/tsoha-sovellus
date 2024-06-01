@@ -14,11 +14,18 @@ def index():
     sql = "SELECT id, topic, created_at FROM books WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(text(sql))
     books = result.fetchall()
-    return render_template("index.html", books=books)
+    sql = "SELECT id, content FROM suggestions ORDER BY id DESC"
+    result = db.session.execute(text(sql))
+    suggestions = result.fetchall()
+    return render_template("index.html", books=books, suggestions=suggestions)
     
 @app.route("/new")
 def new():
     return render_template("new.html")
+
+@app.route("/new_suggestion")
+def new_suggestion():
+    return render_template("new_suggestion.html")
     
 @app.route("/create", methods=["POST"])
 def create():
@@ -61,6 +68,14 @@ def result(id):
 def delete(id):
     sql = text("UPDATE books SET visible=FALSE WHERE id=:id")
     db.session.execute(sql, {"id":id})
+    db.session.commit()
+    return redirect("/")
+
+@app.route("/suggest", methods=["POST"])
+def suggest():
+    content = request.form["content"]
+    sql = text("INSERT INTO suggestions (content) VALUES (:content)")
+    db.session.execute(sql, {"content":content})
     db.session.commit()
     return redirect("/")
 

@@ -9,6 +9,14 @@ Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
 <a href="/delete/{{ book.id }}">Poista kirja</a> <br>
 <hr>
 {% endfor %}
+<a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a>
+<hr>
+Ehdotetut kirjat:
+{% for suggestion in suggestions %}
+<ul>
+<li>{{ suggestion.content }}</li>
+</ul>
+{% endfor %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
