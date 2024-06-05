@@ -3,14 +3,14 @@
 Sovelluksen avulla kirjakerhon jäsenet voivat kommentoida luettuja kirjoja ja ehdottaa uusia kirjoja kerhon luettavaksi.
 
 Nykytilanteessa:
-- Sovellukseen voi kirjautua millä tahansa käyttäjätunnuksella ja salasanalla.
+- Sovellukseen voi rekisteröityä. Ylläpitäjäksi rekisteröityminen tapahtuu antamalla salasanaksi "admin".
+- Rekisteröitynyt käyttäjä voi kirjautua sovellukseen.
 - Käyttäjä näkee sovelluksen etusivulla listan luetuista kirjoista sekä listan ehdotetuista kirjoista.
 - Käyttäjä voi lisätä uuden kommentin luetulle kirjalle ja lukea muiden antamia kommentteja.
 - Käyttäjä voi ehdottaa uusia kirjoja luettavaksi ja nähdä listan jo ehdotetuista.
 - Käyttäjä voi lisätä ja poistaa luettuja kirjoja.
 
 Seuraavat askeleet:
-- Luoda rekisteröityminen ja salasanan tarkastus.
 - Antaa vain ylläpitäjille oikeus lisätä ja poistaa luettuja kirjoja.
 - Antaa käyttäjän poistaa/muokata omia kommenttejaan.
 - Parantaa sovelluksen ulkoasua.
