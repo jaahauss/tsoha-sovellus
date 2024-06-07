@@ -1,6 +1,6 @@
 from app import app
 from flask import redirect, render_template, request, session
-import users
+import users, archiving, suggestions
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 from db import db
@@ -62,31 +62,23 @@ def result(id):
 
 @app.route("/archive/<int:id>")
 def archive(id):
-    sql = text("UPDATE books SET visible=FALSE WHERE id=:id")
-    db.session.execute(sql, {"id":id})
-    db.session.commit()
+    archiving.archive(id)
     return redirect("/")
 
 @app.route("/archive_result")
 def archive_result():
-    sql = "SELECT id, topic, created_at FROM books WHERE visible=FALSE ORDER BY id DESC"
-    result = db.session.execute(text(sql))
-    books = result.fetchall()
+    books = archiving.archive_result()
     return render_template("archive_result.html", books=books)
 
 @app.route("/unarchive/<int:id>")
 def unarchive(id):
-    sql = text("UPDATE books SET visible=TRUE WHERE id=:id")
-    db.session.execute(sql, {"id":id})
-    db.session.commit()
+    archiving.unarchive(id)
     return redirect("/")
 
 @app.route("/suggest", methods=["POST"])
 def suggest():
     content = request.form["content"]
-    sql = text("INSERT INTO suggestions (content) VALUES (:content)")
-    db.session.execute(sql, {"content":content})
-    db.session.commit()
+    suggestions.suggest(content)
     return redirect("/")
 
 @app.route("/login", methods=["POST"])
