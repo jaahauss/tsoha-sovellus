@@ -1,7 +1,15 @@
 {{ topic }}
 <hr>
 {% for message in messages %}
-<p>{{ message.content }}</p>
+Viesti: {{ message[0] }} <br>
+Lähettäjä: {{ message[1] }} <br>
+{% if message[1]==user_name or is_admin %}
+Poista
+{% endif %}
+{% if message[1]==user_name %}
+ | Muokkaa
+{% endif %}
+<p>
 {% endfor %}
 <hr>
 <a href="/">Takaisin</a>

@@ -7,13 +7,17 @@ from db import db
 
 @app.route("/")
 def index():
+    user_id = users.user_id()
+    sql = text("SELECT admin FROM users WHERE id=:user_id")
+    result = db.session.execute(sql, {"user_id":user_id})
+    is_admin = result.fetchone()[0]
     sql = "SELECT id, topic, created_at FROM books WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(text(sql))
     books = result.fetchall()
     sql = "SELECT id, content FROM suggestions ORDER BY id DESC"
     result = db.session.execute(text(sql))
     suggestions = result.fetchall()
-    return render_template("index.html", books=books, suggestions=suggestions)
+    return render_template("index.html", books=books, suggestions=suggestions, is_admin=is_admin)
     
 @app.route("/new")
 def new():
@@ -43,22 +47,30 @@ def write(id):
 
 @app.route("/send", methods=["POST"])
 def send():
+    user_id = users.user_id()
     content = request.form["content"]
     book_id = request.form["id"]
-    sql = text("INSERT INTO messages (book_id, content) VALUES (:book_id, :content)")
-    db.session.execute(sql, {"book_id":book_id, "content":content})
+    sql = text("INSERT INTO messages (book_id, content, user_id) VALUES (:book_id, :content, :user_id)")
+    db.session.execute(sql, {"book_id":book_id, "content":content, "user_id":user_id})
     db.session.commit()
     return redirect("/")
     
 @app.route("/result/<int:id>")
 def result(id):
+    user_id = users.user_id()
+    sql = text("SELECT username FROM users WHERE id=:user_id")
+    result = db.session.execute(sql, {"user_id":user_id})
+    user_name = result.fetchone()[0]
+    sql = text("SELECT admin FROM users WHERE id=:user_id")
+    result = db.session.execute(sql, {"user_id":user_id})
+    is_admin = result.fetchone()[0]
     sql = text("SELECT topic FROM books WHERE id=:id")
     result = db.session.execute(sql, {"id":id})
     topic = result.fetchone()[0]
-    sql = text("SELECT m.content FROM messages m WHERE m.book_id=:book_id")
+    sql = text("SELECT m.content, u.username FROM messages m, users u WHERE m.book_id=:book_id AND m.user_id=u.id")
     result = db.session.execute(sql, {"book_id":id})
     messages = result.fetchall()
-    return render_template("result.html", topic=topic, messages=messages)
+    return render_template("result.html", topic=topic, messages=messages, user_name=user_name, is_admin=is_admin)
 
 @app.route("/archive/<int:id>")
 def archive(id):
@@ -73,7 +85,7 @@ def archive_result():
 @app.route("/unarchive/<int:id>")
 def unarchive(id):
     archiving.unarchive(id)
-    return redirect("/")
+    return redirect("/archive_result")
 
 @app.route("/suggest", methods=["POST"])
 def suggest():

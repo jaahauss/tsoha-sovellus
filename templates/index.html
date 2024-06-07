@@ -1,12 +1,14 @@
 {% if session.username %}
+{% if is_admin %}
 <a href="/new">Uusi kirja</a>
 <hr>
+{% endif %}
 {% for book in books %}
 Kirja: {{ book.topic }} <br>
 Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
 <a href="/write/{{ book.id }}">Lisää kommenttti</a> |
-<a href="/result/{{ book.id }}">Lue kommentit</a> |
-<a href="/archive/{{ book.id }}">Arkistoi kirja</a> <br>
+<a href="/result/{{ book.id }}">Lue kommentit</a> {% if is_admin %} |
+<a href="/archive/{{ book.id }}">Arkistoi kirja</a> {% endif %} <br>
 <hr>
 {% endfor %}
 <a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a> <br>
@@ -16,7 +18,9 @@ Ehdotetut kirjat:
 <li>{{ suggestion.content }}</li>
 </ul>
 {% endfor %}
+{% if is_admin %}
 <a href="/archive_result">Arkisto</a> <br>
+{% endif %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
