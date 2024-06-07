@@ -60,9 +60,23 @@ def result(id):
     messages = result.fetchall()
     return render_template("result.html", topic=topic, messages=messages)
 
-@app.route("/delete/<int:id>")
-def delete(id):
+@app.route("/archive/<int:id>")
+def archive(id):
     sql = text("UPDATE books SET visible=FALSE WHERE id=:id")
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+    return redirect("/")
+
+@app.route("/archive_result")
+def archive_result():
+    sql = "SELECT id, topic, created_at FROM books WHERE visible=FALSE ORDER BY id DESC"
+    result = db.session.execute(text(sql))
+    books = result.fetchall()
+    return render_template("archive_result.html", books=books)
+
+@app.route("/unarchive/<int:id>")
+def unarchive(id):
+    sql = text("UPDATE books SET visible=TRUE WHERE id=:id")
     db.session.execute(sql, {"id":id})
     db.session.commit()
     return redirect("/")
