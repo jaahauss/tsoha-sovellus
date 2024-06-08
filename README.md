@@ -12,6 +12,7 @@ Nykytilanteessa:
 - Ylläpitäjä voi lisätä ja arkistoida luettuja kirjoja.
 - Ylläpitäjä voi katsella arkistoa ja palauttaa arkistoidut kirjat etusivulle.
 - Ylläpitäjä voi poistaa kaikkien käyttäjien kommentteja.
+- Ylläpitäjä voi poistaa ehdotettuja kirjoja.
 
 Seuraavat askeleet:
 - Parantaa sovelluksen ulkoasua.
