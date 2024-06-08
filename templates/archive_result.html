@@ -1,6 +1,7 @@
-{% if session.username %}
-<a href="/new">Uusi kirja</a>
-<hr>
+{% extends "layout.html" %}
+{% block title %}Arkisto{% endblock %}
+{% block content %}
+<h2>Arkisto</h2>
 {% for book in books %}
 Kirja: {{ book.topic }} <br>
 Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
@@ -8,17 +9,5 @@ Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
 <a href="/unarchive/{{ book.id }}">Palauta kirja</a> <br>
 <hr>
 {% endfor %}
-<a href="/">Takaisin</a> <br>
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<form action="/login" method="POST">
-<p>Tunnus:<br>
-<input type="text" name="username"></p>
-<p>Salasana:<br>
-<input type="password" name="password"></p>
-<input type="submit" value="Kirjaudu">
-</form>
-Jos sinulla ei ole tunnusta, voit luoda uuden tunnuksen <a href="/register">tästä</a>
-{% endif %}
+{% endblock %}
 

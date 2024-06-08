@@ -1,3 +1,7 @@
+{% extends "layout.html" %}
+{% block title %}Rekisteröityminen{% endblock %}
+{% block content %}
+<h2>Rekisteröityminen</h2>
 <form action="/register" method="post">
     Tunnus: <input type="text" name="username">
     <p>
@@ -7,5 +11,4 @@
     <p>
     <input type="submit" value="Luo tunnus">
     </form>
-    <p>
-    <a href="/">Aloitussivulle</a>
+    {% endblock %}

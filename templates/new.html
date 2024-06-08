@@ -1,5 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}Uusi kirja{% endblock %}
+{% block content %}
+<h2>Uusi kirja</h2>
 <form action="/create" method="POST">
-<p>Aihe:<br>
+<p>Uusi kirja:<br>
 <input type="text" name="topic"></p>
 <input type="submit" value="Luo kirja">
 </form>
+{% endblock %}

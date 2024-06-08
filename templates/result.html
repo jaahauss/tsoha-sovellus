@@ -1,4 +1,7 @@
-{{ topic }}
+{% extends "layout.html" %}
+{% block title %}{{ topic }}{% endblock %}
+{% block content %}
+<h2>{{ topic }}</h2>
 <hr>
 {% for message in messages %}
 Viesti: {{ message[1] }} <br>
@@ -11,5 +14,4 @@ Lähettäjä: {{ message[2] }} <br>
 {% endif %}
 <p>
 {% endfor %}
-<hr>
-<a href="/">Takaisin</a>
+{% endblock %}

@@ -1,9 +1,11 @@
-{{ topic }}
+{% extends "layout.html" %}
+{% block title %}Uusi ehdotus{% endblock %}
+{% block content %}
+<h2>Uusi ehdotus</h2>
 <form action="/suggest" method="post">
 Ehdotus: <br>
 <textarea name="content" rows="3" cols="40"></textarea>
 <br>
 <input type="submit" value="Lähetä">
 </form>
-<hr>
-<a href="/">Takaisin</a>
+{% endblock %}
