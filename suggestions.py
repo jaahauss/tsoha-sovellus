@@ -15,3 +15,17 @@ def delete(id):
     db.session.execute(sql, {"id":id})
     db.session.commit()
 
+def approve(id):
+    sql = text("UPDATE suggestions SET visible=FALSE WHERE id=:id")
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+    sql = text("SELECT content FROM suggestions WHERE id=:id")
+    result = db.session.execute(sql, {"id":id})
+    topic = result.fetchone()[0]
+    sql = text("INSERT INTO books (topic, created_at) VALUES (:topic, NOW()) RETURNING id")
+    result = db.session.execute(sql, {"topic":topic})
+    book_id = result.fetchone()[0]
+    sql = text("UPDATE books SET visible=TRUE WHERE id=:book_id")
+    db.session.execute(sql, {"book_id":book_id})
+    db.session.commit()
+

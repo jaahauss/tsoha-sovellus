@@ -90,6 +90,11 @@ def suggest():
 def delete_suggestion(id):
     suggestions.delete(id)
     return redirect("/")
+
+@app.route("/approve_suggestion/<int:id>")
+def approve_suggestion(id):
+    suggestions.approve(id)
+    return redirect("/")
     
 @app.route("/login", methods=["POST"])
 def login():

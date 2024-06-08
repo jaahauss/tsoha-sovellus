@@ -19,7 +19,8 @@ Ehdotetut kirjat:
 <ul>
 <li>{{ suggestion.content }}</li>
 {% if is_admin %}
-<a href="/delete_suggestion/{{ suggestion.id }}">Poista</a>
+<a href="/delete_suggestion/{{ suggestion.id }}">Poista</a> |
+<a href="/approve_suggestion/{{ suggestion.id }}">Hyväksy luettavaksi</a> 
 {% endif %}
 </ul>
 {% endfor %}
