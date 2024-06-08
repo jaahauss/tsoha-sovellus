@@ -1,23 +1,12 @@
 from app import app
 from flask import redirect, render_template, request, session
-import users, archiving, suggestions
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import text
-from db import db
+import users, archiving, suggestions, books, comments
 
 @app.route("/")
 def index():
     user_id = users.user_id()
-    sql = text("SELECT admin FROM users WHERE id=:user_id")
-    result = db.session.execute(sql, {"user_id":user_id})
-    is_admin = result.fetchone()[0]
-    sql = "SELECT id, topic, created_at FROM books WHERE visible=TRUE ORDER BY id DESC"
-    result = db.session.execute(text(sql))
-    books = result.fetchall()
-    sql = "SELECT id, content FROM suggestions ORDER BY id DESC"
-    result = db.session.execute(text(sql))
-    suggestions = result.fetchall()
-    return render_template("index.html", books=books, suggestions=suggestions, is_admin=is_admin)
+    result = books.index(user_id)
+    return render_template("index.html", books=result[0], suggestions=result[1], is_admin=result[2])
     
 @app.route("/new")
 def new():
@@ -30,19 +19,12 @@ def new_suggestion():
 @app.route("/create", methods=["POST"])
 def create():
     topic = request.form["topic"]
-    sql = text("INSERT INTO books (topic, created_at) VALUES (:topic, NOW()) RETURNING id")
-    result = db.session.execute(sql, {"topic":topic})
-    book_id = result.fetchone()[0]
-    sql = text("UPDATE books SET visible=TRUE WHERE id=:book_id")
-    db.session.execute(sql, {"book_id":book_id})
-    db.session.commit()
+    books.create()
     return redirect("/")
 
 @app.route("/write/<int:id>")
 def write(id):
-    sql = text("SELECT topic FROM books WHERE id=:id")
-    result = db.session.execute(sql, {"id":id})
-    topic = result.fetchone()[0]
+    topic = comments.write(id)
     return render_template("new_message.html", id=id, topic=topic)
 
 @app.route("/send", methods=["POST"])
@@ -50,27 +32,14 @@ def send():
     user_id = users.user_id()
     content = request.form["content"]
     book_id = request.form["id"]
-    sql = text("INSERT INTO messages (book_id, content, user_id) VALUES (:book_id, :content, :user_id)")
-    db.session.execute(sql, {"book_id":book_id, "content":content, "user_id":user_id})
-    db.session.commit()
+    comments.send(user_id, content, book_id)
     return redirect("/")
     
 @app.route("/result/<int:id>")
 def result(id):
     user_id = users.user_id()
-    sql = text("SELECT username FROM users WHERE id=:user_id")
-    result = db.session.execute(sql, {"user_id":user_id})
-    user_name = result.fetchone()[0]
-    sql = text("SELECT admin FROM users WHERE id=:user_id")
-    result = db.session.execute(sql, {"user_id":user_id})
-    is_admin = result.fetchone()[0]
-    sql = text("SELECT topic FROM books WHERE id=:id")
-    result = db.session.execute(sql, {"id":id})
-    topic = result.fetchone()[0]
-    sql = text("SELECT m.content, u.username FROM messages m, users u WHERE m.book_id=:book_id AND m.user_id=u.id")
-    result = db.session.execute(sql, {"book_id":id})
-    messages = result.fetchall()
-    return render_template("result.html", topic=topic, messages=messages, user_name=user_name, is_admin=is_admin)
+    result = comments.result(user_id, id)
+    return render_template("result.html", topic=result[0], messages=result[1], user_name=result[2], is_admin=result[3])
 
 @app.route("/archive/<int:id>")
 def archive(id):
