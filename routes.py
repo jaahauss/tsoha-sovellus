@@ -86,6 +86,11 @@ def suggest():
     suggestions.suggest(content)
     return redirect("/")
 
+@app.route("/delete_suggestion/<int:id>")
+def delete_suggestion(id):
+    suggestions.delete(id)
+    return redirect("/")
+    
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]

@@ -9,7 +9,7 @@ def index(user_id):
     sql = "SELECT id, topic, created_at FROM books WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(text(sql))
     books = result.fetchall()
-    sql = "SELECT id, content FROM suggestions ORDER BY id DESC"
+    sql = "SELECT id, content FROM suggestions WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(text(sql))
     suggestions = result.fetchall()
     return [books, suggestions, is_admin]

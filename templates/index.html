@@ -18,6 +18,9 @@ Ehdotetut kirjat:
 {% for suggestion in suggestions %}
 <ul>
 <li>{{ suggestion.content }}</li>
+{% if is_admin %}
+<a href="/delete_suggestion/{{ suggestion.id }}">Poista</a>
+{% endif %}
 </ul>
 {% endfor %}
 {% if is_admin %}
