@@ -7,12 +7,13 @@ Nykytilanteessa:
 - Rekisteröitynyt käyttäjä voi kirjautua sovellukseen.
 - Käyttäjä näkee sovelluksen etusivulla listan luetuista kirjoista sekä listan ehdotetuista kirjoista.
 - Käyttäjä voi lisätä uuden kommentin luetulle kirjalle ja lukea muiden antamia kommentteja.
+- Käyttäjä voi poistaa ja muokata omia kommenttejaan.
 - Käyttäjä voi ehdottaa uusia kirjoja luettavaksi ja nähdä listan jo ehdotetuista.
 - Ylläpitäjä voi lisätä ja arkistoida luettuja kirjoja.
 - Ylläpitäjä voi katsella arkistoa ja palauttaa arkistoidut kirjat etusivulle.
+- Ylläpitäjä voi poistaa kaikkien käyttäjien kommentteja.
 
 Seuraavat askeleet:
-- Antaa käyttäjän poistaa/muokata omia kommenttejaan.
 - Parantaa sovelluksen ulkoasua.
 - Nimetä repositorio kuvaavammin.
 
