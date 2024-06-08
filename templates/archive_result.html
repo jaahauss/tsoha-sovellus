@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
-{% block title %}Arkisto{% endblock %}
+{% block title %}{{ topic }} (arkistoitu){% endblock %}
 {% block content %}
-<h2>Arkisto</h2>
-{% for book in books %}
-Kirja: {{ book.topic }} <br>
-Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
-<a href="/result/{{ book.id }}">Lue kommentit</a> |
-<a href="/unarchive/{{ book.id }}">Palauta kirja</a> <br>
+<h2>{{ topic }} (arkistoitu)</h2>
 <hr>
+{% for message in messages %}
+Viesti: {{ message[1] }} <br>
+Lähettäjä: {{ message[2] }} <br>
+<p>
 {% endfor %}
+<a href="/archive_index">Takaisin</a>
 {% endblock %}
-

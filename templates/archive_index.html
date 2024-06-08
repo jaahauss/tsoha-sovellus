@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Arkisto{% endblock %}
+{% block content %}
+<h2>Arkisto</h2>
+{% for book in books %}
+Kirja: {{ book.topic }} <br>
+Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
+<a href="/archive_result/{{ book.id }}">Lue kommentit</a> |
+<a href="/unarchive/{{ book.id }}">Palauta kirja</a> <br>
+<hr>
+{% endfor %}
+{% endblock %}
+

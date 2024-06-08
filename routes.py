@@ -60,15 +60,21 @@ def archive(id):
     archiving.archive(id)
     return redirect("/")
 
-@app.route("/archive_result")
-def archive_result():
-    books = archiving.archive_result()
-    return render_template("archive_result.html", books=books)
+@app.route("/archive_index")
+def archive_index():
+    books = archiving.archive_index()
+    return render_template("archive_index.html", books=books)
+
+@app.route("/archive_result/<int:id>")
+def archive_result(id):
+    user_id = users.user_id()
+    result = archiving.result(user_id, id)
+    return render_template("archive_result.html", topic=result[0], messages=result[1], user_name=result[2], is_admin=result[3], book_id=id)
 
 @app.route("/unarchive/<int:id>")
 def unarchive(id):
     archiving.unarchive(id)
-    return redirect("/archive_result")
+    return redirect("/archive_index")
 
 @app.route("/new_suggestion")
 def new_suggestion():
