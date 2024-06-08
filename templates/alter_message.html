@@ -1,0 +1,11 @@
+{{ topic }}
+<form action="/send_altered" method="post">
+Kommentti: <br>
+<textarea name="content" rows="3" cols="40"></textarea>
+<br>
+<input type="submit" value="Lähetä">
+<input type="hidden" name="book_id" value="{{ book_id }}">
+<input type="hidden" name="id" value="{{ id }}">
+</form>
+<hr>
+<a href="/result/{{ book_id }}">Takaisin</a>

@@ -11,15 +11,11 @@ def index():
 @app.route("/new")
 def new():
     return render_template("new.html")
-
-@app.route("/new_suggestion")
-def new_suggestion():
-    return render_template("new_suggestion.html")
     
 @app.route("/create", methods=["POST"])
 def create():
     topic = request.form["topic"]
-    books.create()
+    books.create(topic)
     return redirect("/")
 
 @app.route("/write/<int:id>")
@@ -33,14 +29,32 @@ def send():
     content = request.form["content"]
     book_id = request.form["id"]
     comments.send(user_id, content, book_id)
-    return redirect("/")
+    return redirect("/result/"+str(book_id))
     
 @app.route("/result/<int:id>")
 def result(id):
     user_id = users.user_id()
     result = comments.result(user_id, id)
-    return render_template("result.html", topic=result[0], messages=result[1], user_name=result[2], is_admin=result[3])
+    return render_template("result.html", topic=result[0], messages=result[1], user_name=result[2], is_admin=result[3], book_id=id)
 
+@app.route("/delete_message/<int:id>/<int:book_id>")
+def delete_message(id, book_id):
+    comments.delete(id)
+    return redirect("/result/"+str(book_id))
+
+@app.route("/alter_message/<int:id>/<int:book_id>")
+def alter_message(id, book_id):
+    topic = comments.alter(book_id)
+    return render_template("alter_message.html", id=id, book_id=book_id, topic=topic)
+
+@app.route("/send_altered", methods=["POST"])
+def send_altered():
+    content = request.form["content"]
+    book_id = request.form["book_id"]
+    message_id = request.form["id"]
+    comments.send_altered(content, message_id)
+    return redirect("/result/"+str(book_id))
+    
 @app.route("/archive/<int:id>")
 def archive(id):
     archiving.archive(id)
@@ -56,6 +70,10 @@ def unarchive(id):
     archiving.unarchive(id)
     return redirect("/archive_result")
 
+@app.route("/new_suggestion")
+def new_suggestion():
+    return render_template("new_suggestion.html")
+    
 @app.route("/suggest", methods=["POST"])
 def suggest():
     content = request.form["content"]

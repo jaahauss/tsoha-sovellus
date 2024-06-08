@@ -1,13 +1,13 @@
 {{ topic }}
 <hr>
 {% for message in messages %}
-Viesti: {{ message[0] }} <br>
-Lähettäjä: {{ message[1] }} <br>
-{% if message[1]==user_name or is_admin %}
-Poista
+Viesti: {{ message[1] }} <br>
+Lähettäjä: {{ message[2] }} <br>
+{% if message[2]==user_name or is_admin %}
+<a href="/delete_message/{{ message[0] }}/{{ book_id }}">Poista kommentti</a>
 {% endif %}
-{% if message[1]==user_name %}
- | Muokkaa
+{% if message[2]==user_name %}
+ | <a href="/alter_message/{{ message[0] }}/{{ book_id }}">Muokkaa kommenttia</a>
 {% endif %}
 <p>
 {% endfor %}
