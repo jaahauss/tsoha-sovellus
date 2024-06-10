@@ -2,33 +2,34 @@
 <h1>Kirjakerho</h1>
 {% if session.username %}
 {% if is_admin %}
-<a href="/new">Uusi kirja</a>
-<hr>
+<a href="/new">Uusi kirja</a> | 
+<a href="/archive_index">Arkisto</a> | 
 {% endif %}
+<a href=#read-books>Luetut kirjat</a>
+ | <a href=#suggested-books>Ehdotetut kirjat</a>
+ | <a href="/logout">Kirjaudu ulos</a>
+<p>
+<h2 id="read-books">Luetut kirjat</h2>
 {% for book in books %}
 Kirja: {{ book.topic }} <br>
 Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
-<a href="/write/{{ book.id }}">Lisää kommenttti</a> |
+<a href="/write/{{ book.id }}">Lisää kommentti</a> |
 <a href="/result/{{ book.id }}">Lue kommentit</a> {% if is_admin %} |
-<a href="/archive/{{ book.id }}">Arkistoi kirja</a> {% endif %} <br>
-<hr>
+<a href="/archive/{{ book.id }}">Arkistoi kirja</a> {% endif %}
+<p>
 {% endfor %}
-<a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a> <br>
-Ehdotetut kirjat:
-{% for suggestion in suggestions %}
+<h2 id="suggested-books">Ehdotetut kirjat</h2>
 <ul>
+{% for suggestion in suggestions %}
 <li>{{ suggestion.content }}</li>
 {% if is_admin %}
 <a href="/delete_suggestion/{{ suggestion.id }}">Poista</a> |
 <a href="/approve_suggestion/{{ suggestion.id }}">Hyväksy luettavaksi</a> 
 {% endif %}
-</ul>
 {% endfor %}
-{% if is_admin %}
-<a href="/archive_index">Arkisto</a> <br>
-{% endif %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
+<li><a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a></li>
+</ul>
+<p>Olet kirjautunut nimellä {{ session.username }} <a href="/logout">Kirjaudu ulos</a></p>
 {% else %}
 <form action="/login" method="POST">
 <p>Tunnus:<br>
