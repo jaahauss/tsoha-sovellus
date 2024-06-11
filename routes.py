@@ -5,8 +5,11 @@ import users, archiving, suggestions, books, comments
 @app.route("/")
 def index():
     user_id = users.user_id()
-    result = books.index(user_id)
-    return render_template("index.html", books=result[0], suggestions=result[1], is_admin=result[2])
+    if user_id != 0:
+        result = books.index(user_id)
+        return render_template("index.html", books=result[0], suggestions=result[1], is_admin=result[2])
+    else:
+        return render_template("index.html")
     
 @app.route("/new")
 def new():
