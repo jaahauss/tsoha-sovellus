@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}{{ topic }}{% endblock %}
+{% block content %}
+<h2>{{ topic }}</h2>
+<form action="/send_review" method="post">
+Arvosana: <br>
+<input type="radio" name="grade" value="1" required> 1
+<input type="radio" name="grade" value="2"> 2
+<input type="radio" name="grade" value="3"> 3
+<input type="radio" name="grade" value="4"> 4
+<input type="radio" name="grade" value="5"> 5
+<br>
+<input type="submit" value="Lähetä">
+<input type="hidden" name="id" value="{{ id }}">
+</form>
+{% endblock %}

@@ -4,7 +4,7 @@
 <h2>{{ topic }}</h2>
 <hr>
 {% for message in messages %}
-Viesti: {{ message[1] }} <br>
+Kommentti: {{ message[1] }} <br>
 Lähettäjä: {{ message[2] }} <br>
 {% if message[2]==user_name or is_admin %}
 <a href="/delete_message/{{ message[0] }}/{{ book_id }}">Poista kommentti</a>
@@ -14,4 +14,5 @@ Lähettäjä: {{ message[2] }} <br>
 {% endif %}
 <p>
 {% endfor %}
+<a href="/write/{{ book_id }}">Lisää kommentti</a> <br>
 {% endblock %}

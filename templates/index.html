@@ -13,6 +13,12 @@
 {% for book in books %}
 Kirja: {{ book.topic }} <br>
 Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
+{% if book[3] %}
+Arvosana: {{ book[3]/book[4] }}/5 perustuen {{ book[4] }} arvosteluun<br>
+{% else %}
+Arvosana: <i>Ei vielä arvosteluja</i> <br>
+{% endif %}
+<a href="/review/{{ book.id }}">Arvioi kirja</a> |
 <a href="/write/{{ book.id }}">Lisää kommentti</a> |
 <a href="/result/{{ book.id }}">Lue kommentit</a> {% if is_admin %} |
 <a href="/archive/{{ book.id }}">Arkistoi kirja</a> {% endif %}

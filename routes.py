@@ -1,6 +1,6 @@
 from app import app
 from flask import redirect, render_template, request, session
-import users, archiving, suggestions, books, comments
+import users, archiving, suggestions, books, comments, reviews
 
 @app.route("/")
 def index():
@@ -25,6 +25,19 @@ def create():
     else:
         books.create(topic)
         return redirect("/")
+        
+@app.route("/review/<int:id>")
+def review(id):
+    topic = reviews.review(id)
+    return render_template("new_review.html", id=id, topic=topic)
+
+@app.route("/send_review", methods=["POST"])
+def send_review():
+    grade = request.form["grade"]
+    book_id = request.form["id"]
+    reviews.send(grade, book_id)
+    return redirect("/")
+        
 
 @app.route("/write/<int:id>")
 def write(id):
