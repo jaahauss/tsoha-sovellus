@@ -1,54 +1,76 @@
+<!DOCTYPE html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kirjakerho</title>
-<h1>Kirjakerho</h1>
-{% if session.username %}
-{% if is_admin %}
-<a href="/new">Uusi kirja</a> | 
-<a href="/archive_index">Arkisto</a> | 
-{% endif %}
-<a href=#read-books>Luetut kirjat</a>
- | <a href=#suggested-books>Ehdotetut kirjat</a>
- | <a href="/logout">Kirjaudu ulos</a>
-<p>
-<h2 id="read-books">Luetut kirjat</h2>
-{% for book in books %}
-Kirja: {{ book.topic }} <br>
-Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
-{% if book.gradesum %}
-Arvosana: {{ book.gradesum/book.gradecount }}/5 perustuen {{ book[4] }} arvosteluun<br>
-{% else %}
-Arvosana: <i>Ei vielä arvosteluja</i> <br>
-{% endif %}
-{% if book.messagecount %}
-Kommentteja: {{ book.messagecount}} <br>
-{% else %}
-Kommentteja: <i>Ei vielä kommentteja</i> <br>
-{% endif %}
-<a href="/review/{{ book.id }}">Arvioi kirja</a> |
-<a href="/write/{{ book.id }}">Lisää kommentti</a> |
-<a href="/result/{{ book.id }}">Lue kommentit</a> {% if is_admin %} |
-<a href="/archive/{{ book.id }}">Arkistoi kirja</a> {% endif %}
-<p>
-{% endfor %}
-<h2 id="suggested-books">Ehdotetut kirjat</h2>
-<ul>
-{% for suggestion in suggestions %}
-<li>{{ suggestion.content }}</li>
-{% if is_admin %}
-<a href="/delete_suggestion/{{ suggestion.id }}">Poista</a> |
-<a href="/approve_suggestion/{{ suggestion.id }}">Hyväksy luettavaksi</a> 
-{% endif %}
-{% endfor %}
-<li><a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a></li>
-</ul>
-<p>Olet kirjautunut nimellä {{ session.username }} <a href="/logout">Kirjaudu ulos</a></p>
-{% else %}
-<form action="/login" method="POST">
-<p>Tunnus:<br>
-<input type="text" name="username"></p>
-<p>Salasana:<br>
-<input type="password" name="password"></p>
-<input type="submit" value="Kirjaudu">
-</form>
-Jos sinulla ei ole tunnusta, voit luoda uuden tunnuksen <a href="/register">tästä</a>
-{% endif %}
+
+<body>
+  <div class="header">
+    <h1>Kirjakerho</h1>
+  </div>
+  {% if session.username %}
+  <nav>
+    <ul>
+    {% if is_admin %}
+      <li><a href="/new">Uusi kirja</a> 
+      <li><a href="/archive_index">Arkisto</a>
+      {% endif %}
+      <li><a href=#read-books>Luetut kirjat</a>
+      <li><a href=#suggested-books>Ehdotetut kirjat</a>
+      <li><a href="/logout">Kirjaudu ulos</a>
+    </ul>
+  </nav>
+  <p>
+  <div class="content">
+    <h2 id="read-books">Luetut kirjat</h2>
+    {% for book in books %}
+    Kirja: <b>{{ book.topic }}</b> <br>
+    Luettu: {{ book.created_at.strftime("%Y-%m-%d") }} <br>
+    {% if book.gradesum %}
+    Arvosana: {{ book.gradesum/book.gradecount }}/5 perustuen {{ book[4] }} arvosteluun<br>
+    {% else %}
+    Arvosana: <i>Ei vielä arvosteluja</i> <br>
+    {% endif %}
+    {% if book.messagecount %}
+    Kommentteja: {{ book.messagecount}} <br>
+    {% else %}
+    Kommentteja: <i>Ei vielä kommentteja</i> <br>
+    {% endif %}
+    <a href="/review/{{ book.id }}">Arvioi kirja</a> |
+    <a href="/write/{{ book.id }}">Lisää kommentti</a> |
+    <a href="/result/{{ book.id }}">Lue kommentit</a> {% if is_admin %} |
+    <a href="/archive/{{ book.id }}">Arkistoi kirja</a> {% endif %}
+    <p>
+    {% endfor %}
+  </div>
+  <p>
+  <div class="content">
+    <h2 id="suggested-books">Ehdotetut kirjat</h2>
+    <ul>
+    {% for suggestion in suggestions %}
+      <li>{{ suggestion.content }}</li>
+      {% if is_admin %}
+      <a href="/delete_suggestion/{{ suggestion.id }}">Poista</a> |
+      <a href="/approve_suggestion/{{ suggestion.id }}">Hyväksy luettavaksi</a> 
+      {% endif %}
+      {% endfor %}
+      <li><a href="/new_suggestion">Ehdota uutta kirjaa luettavaksi</a></li>
+    </ul>
+  </div>
+  <p>Olet kirjautunut nimellä {{ session.username }} <a href="/logout">Kirjaudu ulos</a></p>
+  
+  {% else %}
+  <p>
+  <div class="content">
+    <form action="/login" method="POST">
+    <p>Tunnus:<br>
+    <input type="text" name="username"></p>
+    <p>Salasana:<br>
+    <input type="password" name="password"></p>
+    <input id="button" type="submit" value="Kirjaudu">
+    </form>
+  </div>
+  <p>
+  Jos sinulla ei ole tunnusta, voit luoda uuden tunnuksen <a href="/register">tästä</a>
+  {% endif %}
+</body>
 

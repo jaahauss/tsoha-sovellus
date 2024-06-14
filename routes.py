@@ -81,12 +81,6 @@ def archive_index():
     books = archiving.archive_index()
     return render_template("archive_index.html", books=books)
 
-@app.route("/archive_result/<int:id>")
-def archive_result(id):
-    user_id = users.user_id()
-    result = archiving.result(user_id, id)
-    return render_template("archive_result.html", topic=result[0], messages=result[1], user_name=result[2], is_admin=result[3], book_id=id)
-
 @app.route("/unarchive/<int:id>")
 def unarchive(id):
     archiving.unarchive(id)
@@ -131,7 +125,7 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("error.html", message="Salasanat eroavat")
+            return render_template("error.html", message="Salasanat eroavat toisistaan")
         if users.register(username, password1):
             return redirect("/")
         else:
