@@ -6,7 +6,7 @@ def index(user_id):
     sql = text("SELECT admin FROM users WHERE id=:user_id")
     result = db.session.execute(sql, {"user_id":user_id})
     is_admin = result.fetchone()[0]
-    sql = "SELECT b.id, b.topic, b.created_at, SUM(r.grade), COUNT(r.grade) FROM books b LEFT JOIN reviews r ON b.id=r.book_id WHERE b.visible=TRUE GROUP BY b.id ORDER BY b.id DESC"
+    sql = "SELECT books.id, books.topic, books.created_at, sub1.gradesum, sub1.gradecount, sub2.messagecount FROM books LEFT OUTER JOIN (SELECT book_id, SUM(grade) AS gradesum, COUNT(grade) AS gradecount FROM reviews GROUP BY book_id) AS sub1 ON sub1.book_id=books.id LEFT OUTER JOIN (SELECT book_id, COUNT(id) AS messagecount FROM messages WHERE visible=TRUE GROUP BY book_id) AS sub2 ON sub2.book_id=books.id WHERE books.visible=TRUE ORDER BY books.created_at DESC"
     result = db.session.execute(text(sql))
     books = result.fetchall()
     sql = "SELECT id, content FROM suggestions WHERE visible=TRUE ORDER BY id DESC"

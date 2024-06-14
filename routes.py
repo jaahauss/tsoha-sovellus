@@ -18,13 +18,8 @@ def new():
 @app.route("/create", methods=["POST"])
 def create():
     topic = request.form["topic"]
-    if len(topic) == 0:
-        return render_template("error.html", message="Kirjan nimi ei voi olla tyhjä")
-    if len(topic) > 100:
-        return render_template("error.html", message="Kirjan nimi on liian pitkä (max. 100 merkkiä)")
-    else:
-        books.create(topic)
-        return redirect("/")
+    books.create(topic)
+    return redirect("/")
         
 @app.route("/review/<int:id>")
 def review(id):
@@ -49,13 +44,8 @@ def send():
     user_id = users.user_id()
     content = request.form["content"]
     book_id = request.form["id"]
-    if len(content) == 0:
-        return render_template("error.html", message="Kommentti ei voi olla tyhjä")
-    if len(content) > 1000:
-        return render_template("error.html", message="Kommentti on liian pitkä (max. 1000 merkkiä)")
-    else:
-        comments.send(user_id, content, book_id)
-        return redirect("/result/"+str(book_id))
+    comments.send(user_id, content, book_id)
+    return redirect("/result/"+str(book_id))
     
 @app.route("/result/<int:id>")
 def result(id):
@@ -78,13 +68,8 @@ def send_altered():
     content = request.form["content"]
     book_id = request.form["book_id"]
     message_id = request.form["id"]
-    if len(content) == 0:
-        return render_template("error.html", message="Kommentti ei voi olla tyhjä")
-    if len(content) > 1000:
-        return render_template("error.html", message="Kommentti on liian pitkä (max. 1000 merkkiä)")
-    else:
-        comments.send_altered(content, message_id)
-        return redirect("/result/"+str(book_id))
+    comments.send_altered(content, message_id)
+    return redirect("/result/"+str(book_id))
     
 @app.route("/archive/<int:id>")
 def archive(id):
@@ -114,13 +99,8 @@ def new_suggestion():
 @app.route("/suggest", methods=["POST"])
 def suggest():
     content = request.form["content"]
-    if len(content) == 0:
-        return render_template("error.html", message="Ehdotus ei voi olla tyhjä")
-    if len(content) > 100:
-        return render_template("error.html", message="Ehdotetun kirjan nimi on liian pitkä (max. 100 merkkiä)")
-    else:
-        suggestions.suggest(content)
-        return redirect("/")
+    suggestions.suggest(content)
+    return redirect("/")
 
 @app.route("/delete_suggestion/<int:id>")
 def delete_suggestion(id):
@@ -150,10 +130,6 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        if len(username) == 0 or len(password1) == 0:
-            return render_template("error.html", message="Tunnus tai salasana ei voi olla tyhjä") 
-        if len(username) > 10 or len(password1) > 10:
-            return render_template("error.html", message="Tunnus tai salasana on liian pitkä (max 10 merkkiä)") 
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1):

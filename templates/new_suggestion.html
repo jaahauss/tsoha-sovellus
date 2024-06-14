@@ -4,7 +4,7 @@
 <h2>Uusi ehdotus</h2>
 <form action="/suggest" method="post">
 Ehdotus: <br>
-<input type="text" name="content"></p>
+<input type="text" name="content" required minlength="1" maxlength="50"></p>
 <input type="submit" value="Lähetä">
 </form>
 {% endblock %}

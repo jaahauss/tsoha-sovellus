@@ -3,9 +3,9 @@
 {% block content %}
 <h2>Rekisteröityminen</h2>
 <form action="/register" method="post">
-    Tunnus: <input type="text" name="username">
+    Tunnus: <input type="text" name="username" required minlength="1" maxlength="10">
     <p>
-    Salasana: <input type="password" name="password1">
+    Salasana: <input type="password" name="password1" required minlength="1" maxlength="10">
     <p>
     Salasana uudestaan: <input type="password" name="password2">
     <p>
