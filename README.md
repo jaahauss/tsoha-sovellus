@@ -5,9 +5,10 @@ Sovelluksen avulla kirjakerhon jäsenet voivat kommentoida luettuja kirjoja ja e
 Nykytilanteessa:
 - Sovellukseen voi rekisteröityä. Ylläpitäjäksi rekisteröityminen tapahtuu antamalla salasanaksi "admin".
 - Rekisteröitynyt käyttäjä voi kirjautua sovellukseen.
-- Käyttäjä näkee sovelluksen etusivulla navigointipalkin, listan luetuista kirjoista sekä listan ehdotetuista kirjoista.
+- Käyttäjä näkee sovelluksen etusivulla navigointipalkin, listan luetuista kirjoista (ja jokaisen kirjan kommenttimäärän sekä annettujen arvosanojen keskiarvon) sekä listan ehdotetuista kirjoista.
 - Käyttäjä voi lisätä uuden kommentin luetulle kirjalle ja lukea muiden antamia kommentteja.
 - Käyttäjä voi poistaa ja muokata omia kommenttejaan.
+- Käyttäjä voi antaa kirjalle arvosanan.
 - Käyttäjä voi ehdottaa uusia kirjoja luettavaksi.
 - Ylläpitäjä voi lisätä ja arkistoida luettuja kirjoja.
 - Ylläpitäjä voi katsella arkistoa ja palauttaa arkistoidut kirjat etusivulle.
@@ -15,7 +16,7 @@ Nykytilanteessa:
 - Ylläpitäjä voi poistaa ehdotettuja kirjoja tai hyväksyä niitä luettavaksi.
 
 Seuraavat askeleet:
-- Parantaa sovelluksen ulkoasua.
+- Tehdä muokkauksia kolmannesta välipalautuksesta tulevien kommenttien perusteella, jos aiheellista
 - Nimetä repositorio kuvaavammin.
 
 Sovellusta ei voi testata tuotannossa. Alla on ohje sovelluksen käyttämiseen paikallisesti:
