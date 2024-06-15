@@ -3,13 +3,13 @@
 {% block content %}
 <h2>{{ topic }}</h2>
 {% for message in messages %}
-Kommentti: {{ message[1] }} <br>
-Lähettäjä: {{ message[2] }} <br>
+Kommentti: {{ message.content }} <br>
+Lähettäjä: {{ message.username }} <br>
 {% if message[2]==user_name or is_admin %}
-<a href="/delete_message/{{ message[0] }}/{{ book_id }}">Poista kommentti</a>
+<a href="/delete_message/{{ message.id }}/{{ book_id }}">Poista kommentti</a>
 {% endif %}
 {% if message[2]==user_name %}
- | <a href="/alter_message/{{ message[0] }}/{{ book_id }}">Muokkaa kommenttia</a>
+ | <a href="/alter_message/{{ message.id }}/{{ book_id }}">Muokkaa kommenttia</a>
 {% endif %}
 <p>
 {% endfor %}

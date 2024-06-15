@@ -12,5 +12,6 @@ Arvosana: <br>
 <br>
 <input id="button" type="submit" value="Lähetä">
 <input type="hidden" name="id" value="{{ id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endblock %}

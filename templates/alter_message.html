@@ -4,11 +4,12 @@
 <h2>{{ topic }}</h2>
 <form action="/send_altered" method="post">
 Muokkaa kommenttia: <br>
-<textarea name="content" rows="3" cols="40" required minlength="1" maxlength="100"></textarea>
+<textarea name="content" rows="3" cols="40" required minlength="1" maxlength="100">{{ old }}</textarea>
 <br>
 <input id="button" type="submit" value="Lähetä">
 <input type="hidden" name="book_id" value="{{ book_id }}">
 <input type="hidden" name="id" value="{{ id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <hr>
 <a href="/result/{{ book_id }}">Takaisin</a>

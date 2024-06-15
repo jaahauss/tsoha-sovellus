@@ -17,6 +17,7 @@ def new():
     
 @app.route("/create", methods=["POST"])
 def create():
+    users.check_csrf()
     topic = request.form["topic"]
     books.create(topic)
     return redirect("/")
@@ -28,11 +29,11 @@ def review(id):
 
 @app.route("/send_review", methods=["POST"])
 def send_review():
+    users.check_csrf()
     grade = request.form["grade"]
     book_id = request.form["id"]
     reviews.send(grade, book_id)
-    return redirect("/")
-        
+    return redirect("/") 
 
 @app.route("/write/<int:id>")
 def write(id):
@@ -41,6 +42,7 @@ def write(id):
 
 @app.route("/send", methods=["POST"])
 def send():
+    users.check_csrf()
     user_id = users.user_id()
     content = request.form["content"]
     book_id = request.form["id"]
@@ -60,11 +62,12 @@ def delete_message(id, book_id):
 
 @app.route("/alter_message/<int:id>/<int:book_id>")
 def alter_message(id, book_id):
-    topic = comments.alter(book_id)
-    return render_template("alter_message.html", id=id, book_id=book_id, topic=topic)
+    topic, content = comments.alter(id, book_id)
+    return render_template("alter_message.html", id=id, book_id=book_id, topic=topic, old=content)
 
 @app.route("/send_altered", methods=["POST"])
 def send_altered():
+    users.check_csrf()
     content = request.form["content"]
     book_id = request.form["book_id"]
     message_id = request.form["id"]
@@ -92,6 +95,7 @@ def new_suggestion():
     
 @app.route("/suggest", methods=["POST"])
 def suggest():
+    users.check_csrf()
     content = request.form["content"]
     suggestions.suggest(content)
     return redirect("/")

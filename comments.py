@@ -36,11 +36,14 @@ def delete(id):
     db.session.execute(sql, {"id":id})
     db.session.commit()
 
-def alter(book_id):
+def alter(id, book_id):
     sql = text("SELECT topic FROM books WHERE id=:book_id")
     result = db.session.execute(sql, {"book_id":book_id})
     topic = result.fetchone()[0]
-    return topic
+    sql = text("SELECT content FROM messages WHERE id=:id")
+    result = db.session.execute(sql, {"id":id})
+    content = result.fetchone()[0]
+    return topic, content
 
 def send_altered(content, message_id):
     sql = text("UPDATE messages SET content=:content WHERE id=:message_id")

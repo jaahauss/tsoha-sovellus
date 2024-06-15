@@ -6,5 +6,6 @@
 Ehdotus: <br>
 <input type="text" name="content" required minlength="1" maxlength="50"></p>
 <input id="button" type="submit" value="Lähetä">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endblock %}

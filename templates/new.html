@@ -6,5 +6,6 @@
 <p>Uusi kirja:<br>
 <input type="text" name="topic" required minlength="1" maxlength="50"></p>
 <input id="button" type="submit" value="Luo kirja">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endblock %}
