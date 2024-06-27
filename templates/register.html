@@ -3,12 +3,16 @@
 {% block content %}
 <h2>Rekisteröityminen</h2>
 <form action="/register" method="post">
-    Tunnus: <input type="text" name="username" required minlength="1" maxlength="10">
-    <p>
-    Salasana: <input type="password" name="password1" required minlength="1" maxlength="10">
-    <p>
-    Salasana uudestaan: <input type="password" name="password2">
-    <p>
-    <input id="button" type="submit" value="Luo tunnus">
-    </form>
-    {% endblock %}
+Tunnus: <input type="text" name="username" required minlength="1" maxlength="10">
+<p>
+Salasana: <input type="password" name="password1" required minlength="1" maxlength="10">
+<p>
+Salasana uudestaan: <input type="password" name="password2">
+<p>
+<input id="button" type="submit" value="Luo tunnus">
+</form>
+<p>
+<div class="error">
+{{ message }}
+</div>
+{% endblock %}

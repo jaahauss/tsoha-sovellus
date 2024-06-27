@@ -68,3 +68,6 @@ form #button:hover {
     color: white;
 }
 
+.error {
+    color: red;
+}
