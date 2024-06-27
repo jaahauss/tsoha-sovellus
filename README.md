@@ -15,10 +15,6 @@ Nykytilanteessa:
 - Ylläpitäjä voi poistaa kaikkien käyttäjien kommentteja.
 - Ylläpitäjä voi poistaa ehdotettuja kirjoja tai hyväksyä niitä luettavaksi.
 
-Seuraavat askeleet:
-- Tehdä muokkauksia kolmannesta välipalautuksesta tulevien kommenttien perusteella, jos aiheellista
-- Nimetä repositorio kuvaavammin.
-
 Sovellusta ei voi testata tuotannossa. Alla on ohje sovelluksen käyttämiseen paikallisesti:
 
 ## Käynnistysohje
